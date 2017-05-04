@@ -24,7 +24,7 @@ var app = app || {};
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
 			'blur .edit': 'close',
-			'click .priority-btn': 'levelUp'
+			'click .priority-btn': 'togglePriority'
 		},
 
 		// The TodoView listens for changes to its model, re-rendering. Since
@@ -52,6 +52,7 @@ var app = app || {};
 
 			this.$el.html(this.template(this.model.toJSON()));
 			this.$el.toggleClass('completed', this.model.get('completed'));
+			this.$el.toggleClass('priority', this.model.get('priority'));
 			this.toggleVisible();
 			this.$input = this.$('.edit');
 			return this;
@@ -70,6 +71,11 @@ var app = app || {};
 		// Toggle the `"completed"` state of the model.
 		toggleCompleted: function () {
 			this.model.toggle();
+		},
+
+		// Toggle the `"priority"` state of the model
+		togglePriority: function () {
+			this.model.togglePriority();
 		},
 
 		// Switch this view into `"editing"` mode, displaying the input field.
@@ -124,11 +130,6 @@ var app = app || {};
 				// Also reset the hidden input back to the original value.
 				this.$input.val(this.model.get('title'));
 			}
-		},
-
-		// 提高优先级
-		levelUp: function(e) {
-			this.$el.toggleClass('priority')
 		},
 
 		// Remove the item, destroy the model from *localStorage* and delete its view.
