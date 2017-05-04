@@ -23,7 +23,8 @@ var app = app || {};
 			'click .edit-btn': 'edit',
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
-			'blur .edit': 'close'
+			'blur .edit': 'close',
+			'click .priority-btn': 'levelUp'
 		},
 
 		// The TodoView listens for changes to its model, re-rendering. Since
@@ -123,6 +124,11 @@ var app = app || {};
 				// Also reset the hidden input back to the original value.
 				this.$input.val(this.model.get('title'));
 			}
+		},
+
+		// 提高优先级
+		levelUp: function(e) {
+			this.$el.toggleClass('priority')
 		},
 
 		// Remove the item, destroy the model from *localStorage* and delete its view.
